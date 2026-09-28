@@ -1,9 +1,68 @@
-import example.pepita
+import dependencia.*
+import rodados.*
 
-describe "group of tests for pepita" {
 
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+
+
+describe "deporte y cultura" {
+
+  var deportes
+  var cultura
+  var cachito
+  var corsaAzul
+  var corsaVerde
+  var kwid
+  var kwidSinTanque
+  var trafic
+  var autoEspecial
+
+
+  method initialize(){
+    deportes = new Dependencia(empleados = 45)
+    cultura = new Dependencia(empleados = 31)
+
+    cachito = new ChevroletCorsa(color = "rojo")
+
+    corsaAzul = new ChevroletCorsa(color = "azul")
+    corsaVerde = new ChevroletCorsa(color = "verde")
+
+    kwid = new RenaultKwid(tieneTanqueAdicional = true )
+    kwidSinTanque = new RenaultKwid( )
+    
+    trafic = new Trafic(interior = popular , motor = bataton)
+
+    autoEspecial = new AutoEspecial(capacidad = 5 ,velocidad = 160 , peso = 1200, color = "beige")
+
+    deportes.agregarAFlota([cachito, corsaAzul, corsaVerde, kwid, autoEspecial])
+
+    cultura.agregarAFlota([cachito, kwid, kwid, kwidSinTanque, trafic])
+
+  
   }
 
+
+  test "peso total de flota de deporte y cultura" {
+    assert.equals(6450, deportes.pesoTotal())
+    assert.equals(5200, cultura.pesoTotal())
+  }
+
+  test "esta equipada y no esta equipada" {
+      assert.that(deportes.estaBienEquipada())
+      assert.notThat(cultura.estaBienEquipada())
+  }
+
+  test "la capacidad total del color azul es 7" {
+    assert.equals(7, deportes.capacidadTotalEnColor("azul"))
+    assert.equals(10, cultura.capacidadTotalEnColor("azul"))
+  }
+
+  test "El color del rodado mas rapido" {
+      assert.equals("beige", deportes.colorDelRodadoMasRapido())
+      assert.equals("rojo", cultura.colorDelRodadoMasRapido())
+  }
+
+  test "la capacidad faltantes" {
+    assert.equals(25, deportes.capacidadFaltante())
+    assert.equals(5, cultura.capacidadFaltante())
+  }
 }
